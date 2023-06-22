@@ -21,6 +21,7 @@ build:gnu:
     - make -j 8 install
     - export PATH=$PWD/install_test/bin:$PATH
     - popd
+    - ./autogen.sh
     - ./configure --prefix=$PWD/install/mpir-shim --with-pmix=$PWD/ompi/install_for_mpir
     - export PATH=$PWD/install/mpir-shim/bin:$PATH
     - pushd test/ci
