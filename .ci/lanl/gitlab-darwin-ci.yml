@@ -6,7 +6,7 @@ variables:
 stages:
   - build
 
-build:gnu:
+build:ompi_main:
   stage: build
   tags: [darwin-slurm-shared]
   script:
@@ -25,6 +25,7 @@ build:gnu:
     - ./configure --prefix=$PWD/install/mpir-shim --with-pmix=$PWD/ompi/install_for_mpir
     - export PATH=$PWD/install/mpir-shim/bin:$PATH
     - pushd test/ci
+    - ls ../../src/.libs
     - ./build.sh
     - ./run.sh
   artifacts:
