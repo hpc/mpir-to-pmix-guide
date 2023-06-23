@@ -166,4 +166,4 @@ The launch will run until the MPIR process table in built. When the breakpoint a
 
 ## Support
 
-If you have questions or need help either post a GitHub issue (if it is a problem).
+If you have questions or need help post a GitHub issue.
