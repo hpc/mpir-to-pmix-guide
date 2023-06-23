@@ -38,4 +38,37 @@ build:ompi_main:
       - test/ci
     expire_in: 1 week
 
+build:ompi_release:
+  stage: build
+  tags: [darwin-slurm-shared]
+  script:
+    - module load gcc
+    - GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:open-mpi/ompi.git
+    - pushd ompi
+    - rm .gitmodules
+    - cp $GITSUBMODULEPATCH .gitmodules
+    - git checkout v5.0.x
+    - git submodule update --init --recursive
+    - ./autogen.pl
+    - ./configure --with-ucx=no --prefix=$PWD/install_for_mpir
+    - make -j 8 install
+    - export PATH=$PWD/install_for_mpir/bin:$PATH
+    - popd
+    - ./autogen.sh
+    - ./configure --prefix=$PWD/install/mpir-shim --with-pmix=$PWD/ompi/install_for_mpir
+    - make install
+    - export PATH=$PWD/install/mpir-shim/bin:$PATH
+    - pushd test/ci
+    - ls ../../src/.libs
+    - ./build.sh
+    - ./run.sh
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    untracked: true
+    paths:
+      - ompi/install_for_mpir
+      - install/mpir-shim
+      - test/ci
+    expire_in: 1 week
+
 
