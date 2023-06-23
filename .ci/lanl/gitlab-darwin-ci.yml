@@ -23,6 +23,7 @@ build:ompi_main:
     - popd
     - ./autogen.sh
     - ./configure --prefix=$PWD/install/mpir-shim --with-pmix=$PWD/ompi/install_for_mpir
+    - make install
     - export PATH=$PWD/install/mpir-shim/bin:$PATH
     - pushd test/ci
     - ls ../../src/.libs
