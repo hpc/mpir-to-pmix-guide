@@ -45,9 +45,9 @@ build:ompi_release:
     - module load gcc
     - GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:open-mpi/ompi.git
     - pushd ompi
+    - git checkout v5.0.x
     - rm .gitmodules
     - cp $GITSUBMODULEPATCH .gitmodules
-    - git checkout v5.0.x
     - git submodule update --init --recursive
     - ./autogen.pl
     - ./configure --with-ucx=no --prefix=$PWD/install_for_mpir
